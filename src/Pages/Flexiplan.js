@@ -67,7 +67,11 @@ const Flexiplan = () => {
 
     useEffect(() => {
         if (bubbleMapState) {
-
+            let data = Object.entries(eligibilityMap).map(([key, value]) => {
+                let keyName = key.split('_')[1]
+                console.log("manto", keyName)
+                console.log("manto", value)
+            })
         }
     }, [bubbleMapState])
 
