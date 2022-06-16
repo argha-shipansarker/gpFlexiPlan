@@ -28,42 +28,50 @@ const Flexiplan = () => {
             let tempFlexiType = null
             let tempFlexiTypeColor = null
             let tempFlexiSerial = null
+            let presentSelectedValue = null
 
             switch (key) {
                 case "voice":
                     tempFlexiType = "Minutes"
                     tempFlexiSerial = 4
                     tempFlexiTypeColor = "#ee395a"
+                    presentSelectedValue = `${selectedBubbles["voice"]} Min`
                     break;
                 case "sms":
                     tempFlexiType = "SMS"
                     tempFlexiSerial = 6
                     tempFlexiTypeColor = "#4abbc3"
+                    presentSelectedValue = `${selectedBubbles["sms"]} SMS`
                     break;
                 case "bioscope":
                     tempFlexiType = "Bioscope"
                     tempFlexiSerial = 5
                     tempFlexiTypeColor = "#c34ab7"
+                    presentSelectedValue = formatBytes(selectedBubbles["bioscope"])
                     break;
                 case "fourg":
                     tempFlexiType = "4G Internet"
                     tempFlexiSerial = 3
                     tempFlexiTypeColor = "#76c779"
+                    presentSelectedValue = formatBytes(selectedBubbles["fourg"])
                     break;
                 case "longevity":
                     tempFlexiType = "Validity"
                     tempFlexiSerial = 1
                     tempFlexiTypeColor = "#76c779"
+                    presentSelectedValue = `${selectedBubbles["longevity"]} Days`
                     break;
                 case "mca":
                     tempFlexiType = "Missed Call Alert"
                     tempFlexiSerial = 7
                     tempFlexiTypeColor = "null"
+                    presentSelectedValue = selectedBubbles["mca"]
                     break;
                 case "data":
                     tempFlexiType = "Internet"
                     tempFlexiSerial = 2
                     tempFlexiTypeColor = "#76c779"
+                    presentSelectedValue = formatBytes(selectedBubbles["data"])
                     break;
             }
 
@@ -88,7 +96,7 @@ const Flexiplan = () => {
 
             })
             // [key] = temp
-            return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key }
+            return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key, presentSelectedValue }
         })
         setBubbleMapState(tempData.sort((a, b) => a.flexiTypeSerial - b.flexiTypeSerial))
     }, [])
@@ -127,6 +135,10 @@ const Flexiplan = () => {
 
         }
     }, [bubbleMapState])
+
+    useEffect(() => {
+        console.log("manto", eligibleBubbleMapState)
+    }, [eligibleBubbleMapState])
 
 
     if (eligibleBubbleMapState == null)
