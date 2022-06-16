@@ -56,7 +56,7 @@ const Flexiplan = () => {
             }
 
             value.map((item) => {
-                selectedBubbles[key] == item ? tempFlexiTypeVariation.push({ value: item, selected: true }) : tempFlexiTypeVariation.push({ value: item, selected: false })
+                selectedBubbles[key] == item ? tempFlexiTypeVariation.push({ value: item, selected: true, validityDay: (key == "mca" || key == "longevity") ? true : false, type: key} ) : tempFlexiTypeVariation.push({ value: item, selected: false, validityDay: (key == "mca" || key == "longevity") ? true : false, type: key })
 
             })
             // [key] = temp
@@ -67,11 +67,39 @@ const Flexiplan = () => {
 
     useEffect(() => {
         if (bubbleMapState) {
-            let data = Object.entries(eligibilityMap).map(([key, value]) => {
+
+            let tempFlexiValidityObject = bubbleMapState[0]
+            let selectedValidityDay = tempFlexiValidityObject.flexiTypeVariation.find(type => type.selected == true)
+            // console.log("saimum", selectedValidityDay)
+            let allDataForSpecficValidityDay = null
+
+            Object.entries(eligibilityMap).forEach(([key, value]) => {
                 let keyName = key.split('_')[1]
-                console.log("manto", keyName)
-                console.log("manto", value)
+                if(keyName == selectedValidityDay.value){
+                    allDataForSpecficValidityDay = value
+                }
             })
+
+            let eligibleBubbleMapState = bubbleMapState.map(flexiData => {
+                Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
+                    if(flexiData.mainFlexiType == key){
+                        flexiData.flexiTypeVariation.forEach(flexiValue => {
+                            if(value.includes(flexiValue.value)){
+                                flexiValue.validityDay = true
+                            }else{
+                                flexiValue.validityDay = false
+                            }
+                        })
+                    }
+                })
+
+                return flexiData
+            })
+
+            setEligibleBubbleMapState(eligibleBubbleMapState)
+
+            // console.log("saimum", allDataForSpecficValidityDay)
+            // console.log("manto", manto)
         }
     }, [bubbleMapState])
 
@@ -79,23 +107,23 @@ const Flexiplan = () => {
 
 
     useEffect(() => {
-        console.log("shipan", bubbleMapState)
-    }, [bubbleMapState])
+        console.log("shipan", eligibleBubbleMapState)
+    }, [eligibleBubbleMapState])
 
 
-    if (bubbleMapState == null)
+    if (eligibleBubbleMapState == null)
         return null
 
     return (
-        <div className=''>
+        <div className='png-base64'>
             <p>Flexiplan</p>
             <p>Make your own plan and enjoy great savings! Only for GP Customers</p>
             {
-                bubbleMapState.map((value, index) => (
+                eligibleBubbleMapState.map((value, index) => (
                     <div className='grid grid-cols-3 gap-20' key={index}>
                         <p>{value.flexiType}</p>
                         <div className='col-span-2'>
-                            <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} />
+                            <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState}/>
                         </div>
                     </div>
                 ))
