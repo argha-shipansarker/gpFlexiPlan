@@ -9,6 +9,18 @@ const Flexiplan = () => {
     const [bubbleMapState, setBubbleMapState] = useState(null)
     const [eligibleBubbleMapState, setEligibleBubbleMapState] = useState(null)
 
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes*1024*1024 === 0) return '0 MB';
+    
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    
+        const i = Math.floor(Math.log(bytes*1024*1024) / Math.log(k));
+    
+        return parseFloat(((bytes*1024*1024) / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
 
     useEffect(() => {
         const tempData = Object.entries(bubbleMap).map(([key, value]) => {
@@ -56,7 +68,23 @@ const Flexiplan = () => {
             }
 
             value.map((item) => {
-                selectedBubbles[key] == item ? tempFlexiTypeVariation.push({ value: item, selected: true, validityDay: (key == "mca" || key == "longevity") ? true : false, type: key} ) : tempFlexiTypeVariation.push({ value: item, selected: false, validityDay: (key == "mca" || key == "longevity") ? true : false, type: key })
+                selectedBubbles[key] == item ? tempFlexiTypeVariation.push(
+                    { 
+                        value: item, 
+                        selected: true, 
+                        validityDay: (key == "mca" || key == "longevity") ? true : false, 
+                        type: key,
+                        internet: (key == "data" || key == "fourg" || key == "bioscope") ? formatBytes(item) : null
+                    }
+                ) : tempFlexiTypeVariation.push(
+                    { 
+                        value: item, 
+                        selected: false, 
+                        validityDay: (key == "mca" || key == "longevity") ? true : false, 
+                        type: key,
+                        internet: (key == "data" || key == "fourg" || key == "bioscope") ? formatBytes(item) : null
+                    }
+                )
 
             })
             // [key] = temp
@@ -70,7 +98,6 @@ const Flexiplan = () => {
 
             let tempFlexiValidityObject = bubbleMapState[0]
             let selectedValidityDay = tempFlexiValidityObject.flexiTypeVariation.find(type => type.selected == true)
-            // console.log("saimum", selectedValidityDay)
             let allDataForSpecficValidityDay = null
 
             Object.entries(eligibilityMap).forEach(([key, value]) => {
@@ -80,7 +107,7 @@ const Flexiplan = () => {
                 }
             })
 
-            let eligibleBubbleMapState = bubbleMapState.map(flexiData => {
+            let tempEligibleBubbleMapState = bubbleMapState.map(flexiData => {
                 Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
                     if(flexiData.mainFlexiType == key){
                         flexiData.flexiTypeVariation.forEach(flexiValue => {
@@ -96,19 +123,10 @@ const Flexiplan = () => {
                 return flexiData
             })
 
-            setEligibleBubbleMapState(eligibleBubbleMapState)
+            setEligibleBubbleMapState(tempEligibleBubbleMapState)
 
-            // console.log("saimum", allDataForSpecficValidityDay)
-            // console.log("manto", manto)
         }
     }, [bubbleMapState])
-
-
-
-
-    useEffect(() => {
-        console.log("shipan", eligibleBubbleMapState)
-    }, [eligibleBubbleMapState])
 
 
     if (eligibleBubbleMapState == null)
@@ -116,18 +134,22 @@ const Flexiplan = () => {
 
     return (
         <div className='png-base64'>
-            <p>Flexiplan</p>
-            <p>Make your own plan and enjoy great savings! Only for GP Customers</p>
-            {
+            <p className='text-4xl pt-10 pb-5'>Flexiplan</p>
+            <p className='text-lg mt-1.5 font-bold'>Make your own plan and enjoy great savings! Only for GP Customers</p>
+            <div className='grid grid-cols-3'>
+                <div className='col-span-2'>
+                {
                 eligibleBubbleMapState.map((value, index) => (
-                    <div className='grid grid-cols-3 gap-20' key={index}>
-                        <p>{value.flexiType}</p>
+                    <div className='grid grid-cols-3 gap-20 pt-6' key={index}>
+                        <p className='text-xl font-medium'>{value.flexiType}</p>
                         <div className='col-span-2'>
                             <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState}/>
                         </div>
                     </div>
                 ))
             }
+                </div>
+            </div>
 
 
 

@@ -5,11 +5,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       container: {
         screens: {
           lg: "1222px"
         }
       },
+
+      spacing: {
+        
+      }
     },
   },
   plugins: [],

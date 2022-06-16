@@ -4,51 +4,16 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
     const eligibilityMap = require('../RequiredData/eligibility-map.json');
 
-    // useEffect(() => {
-    //     console.log("argha", value);
-    // }, []);
-
     const handleClick = (flexiData) => {
-        // let tempFlexiValidityObject = eligibleBubbleMapState[0]
-        // let selectedValidityDay = tempFlexiValidityObject.flexiTypeVariation.find(type => type.selected == true)
-        // // console.log("saimum", selectedValidityDay)
-        // let allDataForSpecficValidityDay = null
-
-        // Object.entries(eligibilityMap).forEach(([key, value]) => {
-        //     let keyName = key.split('_')[1]
-        //     if(keyName == selectedValidityDay.value){
-        //         allDataForSpecficValidityDay = value
-        //     }
-        // })
-
-        // let eligibleBubbleMapState = bubbleMapState.map(flexiData => {
-        //     Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
-        //         if(flexiData.mainFlexiType == key){
-        //             flexiData.flexiTypeVariation.forEach(flexiValue => {
-        //                 if(value.includes(flexiValue.value)){
-        //                     flexiValue.validityDay = true
-        //                 }else{
-        //                     flexiValue.validityDay = false
-        //                 }
-        //             })
-        //         }
-        //     })
-
-        //     return flexiData
-        // })
-
-        // setEligibleBubbleMapState(eligibleBubbleMapState)
 
         if(flexiData.type == "longevity")
         {
             let tempFlexiValidityObject = eligibleBubbleMapState[0]
             tempFlexiValidityObject.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true: type.selected = false)
-            console.log("saimum", tempFlexiValidityObject)
             
 
         let tempFlexiValidityObjectAfterClicked = eligibleBubbleMapState[0]
         let selectedValidityDay = tempFlexiValidityObjectAfterClicked.flexiTypeVariation.find(type => type.selected == true)
-        // console.log("saimum", selectedValidityDay)
         let allDataForSpecficValidityDay = null
         Object.entries(eligibilityMap).forEach(([key, value]) => {
             let keyName = key.split('_')[1]
@@ -80,15 +45,31 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
         setEligibleBubbleMapState(tempEligibleBubbleMapState)
         
+        } else{
+                let tempFlexiValidityObject = [...eligibleBubbleMapState]
+
+                tempFlexiValidityObject.forEach(flexiValue => {
+                if(flexiValue.mainFlexiType == flexiData.type){
+                    flexiValue.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true: type.selected = false)
+                }
+            })
+
+            setEligibleBubbleMapState(tempFlexiValidityObject)
+
         }
 
-        // eligibleBubbleMapState.forEach(flexiData => {
-        //     if(flexiData.mainFlexiType == value.type){
+    }
 
-        //     }
-        // })
-
-        console.log("sarker", flexiData)
+    const handleBackgroundColor = value => {
+        if(value.selected){
+            return color
+        }else {
+            if(value.validityDay){
+                return "white"
+            }else {
+                return "#f5f5f5"
+            }
+        }
     }
 
     return (
@@ -96,12 +77,12 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             {
                 value.map((value, index) => (
                     <button 
-                    className={`h-20 w-20 rounded-full border-2 flex justify-center items-center`} 
-                    style={{ backgroundColor: value.selected ? color : "white", cursor: value.validityDay ? "pointer" : "not-allowed" }}
+                    className={`h-14 w-14 rounded-full border-2 flex justify-center items-center text-xs`} 
+                    style={{ backgroundColor: handleBackgroundColor(value), cursor: value.validityDay ? "pointer" : "not-allowed" }}
                     disabled={!value.validityDay}
                     onClick={() => handleClick(value)}
                     >
-                        <p style={{ color: value.selected ? "white" : "black" }}>{value.value}</p>
+                        <span style={{ color: value.selected ? "white" : "black" }}>{value.internet ? value.internet : value.value}</span>
                     </button>
                 ))
             }
