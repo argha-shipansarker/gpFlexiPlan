@@ -55,14 +55,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                                 flexiValue.validityDay = false
                             }
                             if(selectedValidityDay.value == 1){
-                                if(flexiData.mainFlexiType == "voice"){
-                                    if(flexiValue.value == 25){
-                                        flexiValue.selected = true
-                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
-                                    }else{
-                                        flexiValue.selected = false
-                                    }
-                                }else{
+                                if(flexiData.mainFlexiType != "voice"){
                                     if(index == 0){
                                         flexiValue.selected = true
                                         flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
@@ -70,8 +63,16 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                                         flexiValue.selected = false
                                     }
                                 }
-                            }else {
-                                
+                            }
+                            if(selectedValidityDay.value == 30){
+                                if(flexiData.mainFlexiType == "voice"){
+                                    if(flexiValue.value == 50){
+                                        flexiValue.selected = true
+                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
+                                    }else{
+                                        flexiValue.selected = false
+                                    }
+                                }
                             }
 
                         })
