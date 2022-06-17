@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/GP-FlexiPlan/static/css/main.648de181.css",
-    "main.js": "/GP-FlexiPlan/static/js/main.75b52bfc.js",
-    "static/js/787.ec4c691a.chunk.js": "/GP-FlexiPlan/static/js/787.ec4c691a.chunk.js",
-    "index.html": "/GP-FlexiPlan/index.html",
-    "main.648de181.css.map": "/GP-FlexiPlan/static/css/main.648de181.css.map",
-    "main.75b52bfc.js.map": "/GP-FlexiPlan/static/js/main.75b52bfc.js.map",
-    "787.ec4c691a.chunk.js.map": "/GP-FlexiPlan/static/js/787.ec4c691a.chunk.js.map"
+    "main.css": "/gpFlexiPlan/static/css/main.648de181.css",
+    "main.js": "/gpFlexiPlan/static/js/main.5d5d61cf.js",
+    "static/js/787.ec4c691a.chunk.js": "/gpFlexiPlan/static/js/787.ec4c691a.chunk.js",
+    "index.html": "/gpFlexiPlan/index.html",
+    "main.648de181.css.map": "/gpFlexiPlan/static/css/main.648de181.css.map",
+    "main.5d5d61cf.js.map": "/gpFlexiPlan/static/js/main.5d5d61cf.js.map",
+    "787.ec4c691a.chunk.js.map": "/gpFlexiPlan/static/js/787.ec4c691a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.648de181.css",
-    "static/js/main.75b52bfc.js"
+    "static/js/main.5d5d61cf.js"
   ]
 }
