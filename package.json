@@ -1,7 +1,7 @@
 {
   "name": "gp-flexiplan",
   "version": "0.1.0",
-  "homepage": "https://argha-shipansarker.github.io/GP-FlexiPlan",
+  "homepage": "https://argha-shipansarker.github.io/gpFlexiPlan",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
