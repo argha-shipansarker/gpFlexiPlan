@@ -93,14 +93,46 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
     const handleBackgroundColor = value => {
         if(value.selected){
-            return color
+            return `bg-[${color}]`
         }else {
             if(value.validityDay){
-                return "white"
+                return "bg-white"
             }else {
-                return "#f5f5f5"
+                return "bg-[#f5f5f5]"
             }
         }
+    }
+
+    const manto = (value) => {
+        let name = null
+        let textColor = `hover:text-white`
+        if(value.validityDay){
+            switch(value.type){
+                case "data":
+                    name = `hover:bg-internet`
+                    break;
+                case "fourg":
+                    name = `hover:bg-internet`
+                    break;
+                case "voice":
+                    name = `hover:bg-minutes`
+                    break;
+                case "bioscope":
+                    name = `hover:bg-bioscope`
+                    break;
+                case "sms":
+                    name = `hover:bg-sms`
+                    break;
+                case "longevity":
+                    name = `hover:bg-validity`
+                    break;
+            }
+        }else{
+            name = `hover:bg-[#f5f5f5]`
+            textColor = `hover:text-black`
+        }
+        console.log("sarker", value)
+        return `${name} ${textColor}`
     }
 
     return (
@@ -108,12 +140,12 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             {
                 value.map((value, index) => (
                     <button 
-                    className={`h-14 w-14 rounded-full border-2 flex justify-center items-center text-xs ml-4 mb-3`} 
-                    style={{ backgroundColor: handleBackgroundColor(value), cursor: value.validityDay ? "pointer" : "not-allowed" }}
+                    className={`h-14 w-14 rounded-full border-2 flex justify-center items-center text-xs ml-4 mb-3 ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`} 
+                    style={{cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
                     disabled={!value.validityDay}
                     onClick={() => handleClick(value)}
                     >
-                        <span style={{ color: value.selected ? "white" : "black" }}>{value.internet ? value.internet : value.value}</span>
+                        <span className={``}>{value.internet ? value.internet : value.value}</span>
                     </button>
                 ))
             }
