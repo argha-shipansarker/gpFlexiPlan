@@ -4,53 +4,84 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
     const eligibilityMap = require('../RequiredData/eligibility-map.json');
 
+    const gettingPresentSelectedValue = (value) => {
+        let name = null
+        switch(value.type){
+            case "data":
+                name = value.internet
+                break;
+            case "fourg":
+                name = value.internet
+                break;
+            case "voice":
+                name = `${value.value} Min`
+                break;
+            case "bioscope":
+                name = value.internet
+                break;
+            case "sms":
+                name = `${value.value} SMS`
+                break;
+        }
+        console.log("sarker", value)
+        return name
+    }
+
     const handleClick = (flexiData) => {
 
         if(flexiData.type == "longevity")
         {
             let tempFlexiValidityObject = eligibleBubbleMapState[0]
             tempFlexiValidityObject.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true: type.selected = false)
-            
+            tempFlexiValidityObject.presentSelectedValue = `${flexiData.value} Days`
 
-        let tempFlexiValidityObjectAfterClicked = eligibleBubbleMapState[0]
-        let selectedValidityDay = tempFlexiValidityObjectAfterClicked.flexiTypeVariation.find(type => type.selected == true)
-        let allDataForSpecficValidityDay = null
-        Object.entries(eligibilityMap).forEach(([key, value]) => {
-            let keyName = key.split('_')[1]
-            if(keyName == selectedValidityDay.value){
-                allDataForSpecficValidityDay = value
-            }
-        })
-
-        let tempEligibleBubbleMapState = eligibleBubbleMapState.map(flexiData => {
-            Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
-                if(flexiData.mainFlexiType == key){
-                    flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
-                        if(value.includes(flexiValue.value)){
-                            flexiValue.validityDay = true
-                        }else{
-                            flexiValue.validityDay = false
-                        }
-                        if(index == 0){
-                            flexiValue.selected = true
-                        }else {
-                            flexiValue.selected = false
-                        }
-                    })
+            let tempFlexiValidityObjectAfterClicked = eligibleBubbleMapState[0]
+            let selectedValidityDay = tempFlexiValidityObjectAfterClicked.flexiTypeVariation.find(type => type.selected == true)
+            let allDataForSpecficValidityDay = null
+            Object.entries(eligibilityMap).forEach(([key, value]) => {
+                let keyName = key.split('_')[1]
+                if(keyName == selectedValidityDay.value){
+                    allDataForSpecficValidityDay = value
                 }
             })
 
-            return flexiData
-        })
+            let tempEligibleBubbleMapState = eligibleBubbleMapState.map(flexiData => {
+                Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
+                    if(flexiData.mainFlexiType == key){
+                        flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
+                            if(value.includes(flexiValue.value)){
+                                flexiValue.validityDay = true
+                            }else{
+                                flexiValue.validityDay = false
+                            }
+                            if(index == 0){
+                                flexiValue.selected = true
+                                flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
+                            }else {
+                                flexiValue.selected = false
+                            }
+                        })
+                    }
+                })
 
-        setEligibleBubbleMapState(tempEligibleBubbleMapState)
+                return flexiData
+            })
+
+            setEligibleBubbleMapState(tempEligibleBubbleMapState)
         
         } else{
                 let tempFlexiValidityObject = [...eligibleBubbleMapState]
 
                 tempFlexiValidityObject.forEach(flexiValue => {
                 if(flexiValue.mainFlexiType == flexiData.type){
-                    flexiValue.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true: type.selected = false)
+                    flexiValue.flexiTypeVariation.forEach(type => {
+                        if(type.value == flexiData.value){
+                            type.selected = true 
+                            flexiValue.presentSelectedValue = gettingPresentSelectedValue(type)
+                        } else{
+                            type.selected = false
+                        }
+                    })
                 }
             })
 

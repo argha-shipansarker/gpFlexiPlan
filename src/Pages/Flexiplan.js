@@ -155,7 +155,7 @@ const Flexiplan = () => {
                     <div className='grid grid-cols-3 gap-20 pt-6' key={index}>
                         <div>
                         <p className='text-xl font-medium'>{value.flexiType}</p>
-                        <p className='text-xl font-medium' style={{color: value.fexiTypeColor}}>{value.presentSelectedValue}</p>
+                        <p className='text-xl font-medium mt-1' style={{color: value.fexiTypeColor}}>{value.presentSelectedValue}</p>
                         </div>
                         <div className='col-span-2'>
                             <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState} />
