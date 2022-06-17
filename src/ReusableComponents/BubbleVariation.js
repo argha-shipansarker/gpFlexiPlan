@@ -23,7 +23,6 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                 name = `${value.value} SMS`
                 break;
         }
-        console.log("sarker", value)
         return name
     }
 
@@ -54,27 +53,19 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                             }else{
                                 flexiValue.validityDay = false
                             }
-                            if(selectedValidityDay.value == 1){
-                                if(flexiData.mainFlexiType != "voice"){
-                                    if(index == 0){
-                                        flexiValue.selected = true
-                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
-                                    }else {
-                                        flexiValue.selected = false
-                                    }
-                                }
-                            }
-                            if(selectedValidityDay.value == 30){
-                                if(flexiData.mainFlexiType == "voice"){
-                                    if(flexiValue.value == 50){
-                                        flexiValue.selected = true
-                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
-                                    }else{
-                                        flexiValue.selected = false
-                                    }
-                                }
-                            }
+                        })
 
+                        let validityFlexiTypeData = flexiData.flexiTypeVariation.filter(flexiValue => flexiValue.validityDay == true)
+
+                        let lastValidityFlexiTypeValue = validityFlexiTypeData[validityFlexiTypeData.length - 1]
+
+                        lastValidityFlexiTypeValue.selected = true
+                        lastValidityFlexiTypeValue.presentSelectedValue = gettingPresentSelectedValue(lastValidityFlexiTypeValue)
+
+                        flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
+                            if(flexiValue.value != lastValidityFlexiTypeValue.value){
+                                flexiValue.selected = false
+                            }
                         })
                     }
                 })
@@ -146,7 +137,6 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             name = `hover:bg-[#f5f5f5]`
             textColor = `hover:text-black`
         }
-        console.log("sarker", value)
         return `${name} ${textColor}`
     }
 

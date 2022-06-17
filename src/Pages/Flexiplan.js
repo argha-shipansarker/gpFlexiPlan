@@ -144,10 +144,6 @@ const Flexiplan = () => {
         }
     }, [bubbleMapState])
 
-    useEffect(() => {
-        console.log("manto", eligibleBubbleMapState)
-    }, [eligibleBubbleMapState])
-
 
     if (eligibleBubbleMapState == null)
         return null
