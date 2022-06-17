@@ -150,10 +150,10 @@ const Flexiplan = () => {
 
     return (
         <div className='png-base64'>
-            <p className='text-4xl pt-10 pb-5'>Flexiplan</p>
-            <p className='text-lg mt-1.5 font-bold'>Make your own plan and enjoy great savings! Only for GP Customers</p>
+            <p className='text-4xl pt-10 pb-5 text-center md:text-start'>Flexiplan</p>
+            <p className='text-lg mt-1.5 font-bold hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
             <div className='grid grid-cols-3'>
-                <div className='col-span-2'>
+                <div className='col-span-3 md:col-span-2'>
                 {
                 eligibleBubbleMapState.map((value, index) => (
                     <div className='grid grid-cols-3 gap-20 pt-6' key={index}>
