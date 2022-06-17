@@ -8,7 +8,7 @@ module.exports = {
 
       container: {
         screens: {
-          lg: "1222px"
+          lg: "1100px"
         }
       },
 

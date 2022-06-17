@@ -108,7 +108,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             {
                 value.map((value, index) => (
                     <button 
-                    className={`h-14 w-14 rounded-full border-2 flex justify-center items-center text-xs`} 
+                    className={`h-14 w-14 rounded-full border-2 flex justify-center items-center text-xs ml-4 mb-3`} 
                     style={{ backgroundColor: handleBackgroundColor(value), cursor: value.validityDay ? "pointer" : "not-allowed" }}
                     disabled={!value.validityDay}
                     onClick={() => handleClick(value)}
