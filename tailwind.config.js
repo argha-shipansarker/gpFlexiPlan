@@ -23,7 +23,7 @@ module.exports = {
         validity: "#76c779",
         internet: "#76c779",
         disabled: "#f5f5f5",
-
+        description: "#767676"
       }
     },
   },

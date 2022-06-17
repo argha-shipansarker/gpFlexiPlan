@@ -30,12 +30,16 @@ const Flexiplan = () => {
             let tempFlexiSerial = null
             let presentSelectedValue = null
 
+            let description = null
+            let attributeDescription = null
+
             switch (key) {
                 case "voice":
                     tempFlexiType = "Minutes"
                     tempFlexiSerial = 4
                     tempFlexiTypeColor = "#ee395a"
                     presentSelectedValue = `${selectedBubbles["voice"]} Min`
+                    description="Any Local Number"
                     break;
                 case "sms":
                     tempFlexiType = "SMS"
@@ -48,12 +52,15 @@ const Flexiplan = () => {
                     tempFlexiSerial = 5
                     tempFlexiTypeColor = "#c34ab7"
                     presentSelectedValue = formatBytes(selectedBubbles["bioscope"])
+                    description="Only used to watch Bioscope"
                     break;
                 case "fourg":
                     tempFlexiType = "4G Internet"
                     tempFlexiSerial = 3
                     tempFlexiTypeColor = "#76c779"
                     presentSelectedValue = formatBytes(selectedBubbles["fourg"])
+                    attributeDescription="4G Only"
+                    description="4G enabled handset + SIM required"
                     break;
                 case "longevity":
                     tempFlexiType = "Validity"
@@ -72,6 +79,7 @@ const Flexiplan = () => {
                     tempFlexiSerial = 2
                     tempFlexiTypeColor = "#76c779"
                     presentSelectedValue = formatBytes(selectedBubbles["data"])
+                    attributeDescription="Regular"
                     break;
             }
 
@@ -96,7 +104,7 @@ const Flexiplan = () => {
 
             })
             // [key] = temp
-            return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key, presentSelectedValue }
+            return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key, presentSelectedValue, attributeDescription, description  }
         })
         setBubbleMapState(tempData.sort((a, b) => a.flexiTypeSerial - b.flexiTypeSerial))
     }, [])
@@ -155,7 +163,13 @@ const Flexiplan = () => {
                     <div className='grid grid-cols-3 gap-20 pt-6' key={index}>
                         <div>
                         <p className='text-xl font-medium'>{value.flexiType}</p>
+                        {
+                            value.attributeDescription && <p className='text-lg font-medium mt-1'>{value.attributeDescription}</p>
+                        }
                         <p className='text-xl font-medium mt-1' style={{color: value.fexiTypeColor}}>{value.presentSelectedValue}</p>
+                        {
+                            value.description && <p className='text-base mt-3 text-description'>{value.description}</p>
+                        }
                         </div>
                         <div className='col-span-2'>
                             <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState} />
