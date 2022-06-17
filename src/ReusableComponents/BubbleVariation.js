@@ -54,12 +54,26 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                             }else{
                                 flexiValue.validityDay = false
                             }
-                            if(index == 0){
-                                flexiValue.selected = true
-                                flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
+                            if(selectedValidityDay.value == 1){
+                                if(flexiData.mainFlexiType == "voice"){
+                                    if(flexiValue.value == 25){
+                                        flexiValue.selected = true
+                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
+                                    }else{
+                                        flexiValue.selected = false
+                                    }
+                                }else{
+                                    if(index == 0){
+                                        flexiValue.selected = true
+                                        flexiData.presentSelectedValue = gettingPresentSelectedValue(flexiValue)
+                                    }else {
+                                        flexiValue.selected = false
+                                    }
+                                }
                             }else {
-                                flexiValue.selected = false
+                                
                             }
+
                         })
                     }
                 })
