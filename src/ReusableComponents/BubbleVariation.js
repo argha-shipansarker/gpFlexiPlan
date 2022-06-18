@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubbleMapState }) => {
 
@@ -117,7 +117,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
         }
     }
 
-    const manto = (value) => {
+    const handleHoverColor = (value) => {
         let name = null
         let textColor = `hover:text-white`
         if (value.validityDay) {
@@ -153,7 +153,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             {
                 value.map((value, index) => (
                     <button
-                        className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-1 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 font-telenor shadow-sm transition duration-300 ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`}
+                        className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-1 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 font-telenor shadow-sm transition duration-300 ${handleBackgroundColor(value)} ${handleHoverColor(value)} ${value.selected ? "text-white" : "text-black"}`}
                         style={{ cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
                         disabled={!value.validityDay}
                         onClick={() => handleClick(value)}

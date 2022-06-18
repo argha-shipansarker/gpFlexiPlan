@@ -26,10 +26,10 @@ const Flexiplan = () => {
 
     const handleSettingBubbleMapState = () => {
         const tempData = Object.entries(bubbleMap).map(([key, value]) => {
-            let tempFlexiTypeVariation = []
-            let tempFlexiType = null
-            let tempFlexiTypeColor = null
-            let tempFlexiSerial = null
+            let flexiTypeVariation = []
+            let flexiType = null
+            let fexiTypeColor = null
+            let flexiTypeSerial = null
             let presentSelectedValue = null
 
             let description = null
@@ -37,77 +37,76 @@ const Flexiplan = () => {
 
             switch (key) {
                 case "voice":
-                    tempFlexiType = "Minutes"
-                    tempFlexiSerial = 4
-                    tempFlexiTypeColor = "#ee395a"
+                    flexiType = "Minutes"
+                    flexiTypeSerial = 4
+                    fexiTypeColor = "#ee395a"
                     presentSelectedValue = `${selectedBubbles["voice"]} Min`
                     description = "Any Local Number"
                     break;
                 case "sms":
-                    tempFlexiType = "SMS"
-                    tempFlexiSerial = 6
-                    tempFlexiTypeColor = "#4abbc3"
+                    flexiType = "SMS"
+                    flexiTypeSerial = 6
+                    fexiTypeColor = "#4abbc3"
                     presentSelectedValue = `${selectedBubbles["sms"]} SMS`
                     break;
                 case "bioscope":
-                    tempFlexiType = "Bioscope"
-                    tempFlexiSerial = 5
-                    tempFlexiTypeColor = "#c34ab7"
+                    flexiType = "Bioscope"
+                    flexiTypeSerial = 5
+                    fexiTypeColor = "#c34ab7"
                     presentSelectedValue = formatBytes(selectedBubbles["bioscope"])
                     description = "Only used to watch Bioscope"
                     break;
                 case "fourg":
-                    tempFlexiType = "4G Internet"
-                    tempFlexiSerial = 3
-                    tempFlexiTypeColor = "#76c779"
+                    flexiType = "4G Internet"
+                    flexiTypeSerial = 3
+                    fexiTypeColor = "#76c779"
                     presentSelectedValue = formatBytes(selectedBubbles["fourg"])
                     attributeDescription = "4G Only"
                     description = "4G enabled handset + SIM required"
                     break;
                 case "longevity":
-                    tempFlexiType = "Validity"
-                    tempFlexiSerial = 1
-                    tempFlexiTypeColor = "#76c779"
+                    flexiType = "Validity"
+                    flexiTypeSerial = 1
+                    fexiTypeColor = "#76c779"
                     presentSelectedValue = `${selectedBubbles["longevity"]} Days`
                     break;
                 case "mca":
-                    tempFlexiType = "Missed Call Alert"
-                    tempFlexiSerial = 7
-                    tempFlexiTypeColor = "null"
+                    flexiType = "Missed Call Alert"
+                    flexiTypeSerial = 7
+                    fexiTypeColor = "null"
                     presentSelectedValue = selectedBubbles["mca"]
                     description = "Validity: 30 days"
                     break;
                 case "data":
-                    tempFlexiType = "Internet"
-                    tempFlexiSerial = 2
-                    tempFlexiTypeColor = "#76c779"
+                    flexiType = "Internet"
+                    flexiTypeSerial = 2
+                    fexiTypeColor = "#76c779"
                     presentSelectedValue = formatBytes(selectedBubbles["data"])
                     attributeDescription = "Regular"
                     break;
             }
 
             value.map((item) => {
-                selectedBubbles[key] == item ? tempFlexiTypeVariation.push(
+                let data = {
+                    value: item,
+                    validityDay: (key == "mca" || key == "longevity") ? true : false,
+                    type: key,
+                    internet: (key == "data" || key == "fourg" || key == "bioscope") ? formatBytes(item) : null
+                }
+                selectedBubbles[key] == item ? flexiTypeVariation.push(
                     {
-                        value: item,
+                        ...data,
                         selected: true,
-                        validityDay: (key == "mca" || key == "longevity") ? true : false,
-                        type: key,
-                        internet: (key == "data" || key == "fourg" || key == "bioscope") ? formatBytes(item) : null
                     }
-                ) : tempFlexiTypeVariation.push(
+                ) : flexiTypeVariation.push(
                     {
-                        value: item,
+                        ...data,
                         selected: false,
-                        validityDay: (key == "mca" || key == "longevity") ? true : false,
-                        type: key,
-                        internet: (key == "data" || key == "fourg" || key == "bioscope") ? formatBytes(item) : null
                     }
                 )
-
             })
-            // [key] = temp
-            return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key, presentSelectedValue, attributeDescription, description }
+
+            return { flexiType, flexiTypeVariation, flexiTypeSerial, fexiTypeColor, mainFlexiType: key, presentSelectedValue, attributeDescription, description }
         })
         setBubbleMapState(tempData.sort((a, b) => a.flexiTypeSerial - b.flexiTypeSerial))
     }
@@ -120,8 +119,7 @@ const Flexiplan = () => {
     useEffect(() => {
         if (bubbleMapState) {
 
-            let tempFlexiValidityObject = bubbleMapState[0]
-            let selectedValidityDay = tempFlexiValidityObject.flexiTypeVariation.find(type => type.selected == true)
+            let selectedValidityDay = bubbleMapState[0].flexiTypeVariation.find(type => type.selected == true)
             let allDataForSpecficValidityDay = null
 
             Object.entries(eligibilityMap).forEach(([key, value]) => {
@@ -152,10 +150,6 @@ const Flexiplan = () => {
 
         }
     }, [bubbleMapState])
-
-    useEffect(() => {
-        console.log("manto", eligibleBubbleMapState)
-    }, [eligibleBubbleMapState])
 
     const handleReset = () => {
         setLoading(true)
