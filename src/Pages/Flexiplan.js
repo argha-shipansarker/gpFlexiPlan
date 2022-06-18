@@ -155,7 +155,7 @@ const Flexiplan = () => {
 
     return (
         <div className='grid grid-cols-3'>
-            <div className='col-span-3 md:col-span-2'>
+            <div className='col-span-3 md:col-span-2 mb-20'>
                 <p className='text-4xl pt-10 pb-5 text-center md:text-start  font-thin font-telenor'>Flexiplan</p>
                 <p className='text-lg mt-1.5 font-telenor hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
                 {
