@@ -148,6 +148,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                         style={{ cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
                         disabled={!value.validityDay}
                         onClick={() => handleClick(value)}
+                        key={index}
                     >
                         <span className={``}>{value.internet ? value.internet : value.value}</span>
                     </button>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import BubbleVariation from "../ReusableComponents/BubbleVariation"
+import ReactSwitch from "../ReusableComponents/ReactSwitch"
 
 const Flexiplan = () => {
     const bubbleMap = require('../RequiredData/bubble-map.json');
@@ -145,7 +146,6 @@ const Flexiplan = () => {
         }
     }, [bubbleMapState])
 
-
     if (eligibleBubbleMapState == null)
         return null
 
@@ -156,20 +156,33 @@ const Flexiplan = () => {
                 <p className='text-lg mt-1.5 font-telenor hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
                 {
                     eligibleBubbleMapState.map((value, index) => (
-                        <div className={`grid grid-cols-3 md:gap-20 pt-6 pb-4 ${index != 1 ? "border-b-1" : ""}`} key={index}>
+                        <div className={`grid grid-cols-3 md:gap-16 pt-6 pb-4 ${index != 1 ? "border-b-1" : ""}`} key={index}>
                             <div className='pr-8 md:pr-0'>
                                 <p className='text-xl font-telenor'>{value.flexiType}</p>
                                 {
                                     value.attributeDescription && <p className='text-lg font-telenor mt-1 hidden md:block'>{value.attributeDescription}</p>
                                 }
-                                <p className='text-xl font-telenor mt-1' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
+                                {
+                                    value.mainFlexiType != "mca" && <p className='text-xl font-telenor mt-1' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
+                                }
                                 {
                                     value.description && <p className='text-base mt-3 text-description font-telenor'>{value.description}</p>
                                 }
                             </div>
-                            <div className='col-span-2'>
-                                <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState} />
-                            </div>
+                            {
+                                value.mainFlexiType == "mca" ? (
+                                    <div className='col-span-2 flex justify-end pr-4'>
+                                        <ReactSwitch
+                                            eligibleBubbleMapState={eligibleBubbleMapState}
+                                            setEligibleBubbleMapState={setEligibleBubbleMapState}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className='col-span-2'>
+                                        <BubbleVariation value={value.flexiTypeVariation} color={value.fexiTypeColor} eligibleBubbleMapState={eligibleBubbleMapState} setEligibleBubbleMapState={setEligibleBubbleMapState} />
+                                    </div>
+                                )
+                            }
                         </div>
                     ))
                 }
