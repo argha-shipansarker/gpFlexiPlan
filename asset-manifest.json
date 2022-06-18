@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/gpFlexiPlan/static/css/main.d577ce66.css",
-    "main.js": "/gpFlexiPlan/static/js/main.aefa1a4f.js",
+    "main.css": "/gpFlexiPlan/static/css/main.1139596f.css",
+    "main.js": "/gpFlexiPlan/static/js/main.c49ea2c7.js",
     "static/js/787.ec4c691a.chunk.js": "/gpFlexiPlan/static/js/787.ec4c691a.chunk.js",
+    "static/media/Telenor-Regular.otf": "/gpFlexiPlan/static/media/Telenor-Regular.a322ae2406e0c8e9ebf3.otf",
     "index.html": "/gpFlexiPlan/index.html",
-    "main.d577ce66.css.map": "/gpFlexiPlan/static/css/main.d577ce66.css.map",
-    "main.aefa1a4f.js.map": "/gpFlexiPlan/static/js/main.aefa1a4f.js.map",
+    "main.1139596f.css.map": "/gpFlexiPlan/static/css/main.1139596f.css.map",
+    "main.c49ea2c7.js.map": "/gpFlexiPlan/static/js/main.c49ea2c7.js.map",
     "787.ec4c691a.chunk.js.map": "/gpFlexiPlan/static/js/787.ec4c691a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d577ce66.css",
-    "static/js/main.aefa1a4f.js"
+    "static/css/main.1139596f.css",
+    "static/js/main.c49ea2c7.js"
   ]
 }
