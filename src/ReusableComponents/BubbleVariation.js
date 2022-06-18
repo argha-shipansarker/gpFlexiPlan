@@ -54,15 +54,21 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                             }
                         })
 
+                        //setting a RANDOM variation of the FlexiType Attributes Initially True when longevity/Validity Field is Changed. 
+
+
+
                         let validityFlexiTypeData = flexiData.flexiTypeVariation.filter(flexiValue => flexiValue.validityDay == true)
 
-                        let lastValidityFlexiTypeValue = validityFlexiTypeData[validityFlexiTypeData.length - 1]
+                        let randomNumber = Math.floor(Math.random() * validityFlexiTypeData.length)
 
-                        lastValidityFlexiTypeValue.selected = true
-                        lastValidityFlexiTypeValue.presentSelectedValue = gettingPresentSelectedValue(lastValidityFlexiTypeValue)
+                        let randomValidityFlexiTypeValue = validityFlexiTypeData[randomNumber]
+
+                        randomValidityFlexiTypeValue.selected = true
+                        flexiData.presentSelectedValue = gettingPresentSelectedValue(randomValidityFlexiTypeValue)
 
                         flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
-                            if (flexiValue.value != lastValidityFlexiTypeValue.value) {
+                            if (flexiValue.value != validityFlexiTypeData[randomNumber].value) {
                                 flexiValue.selected = false
                             }
                         })
