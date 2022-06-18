@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import BubbleVariation from "../ReusableComponents/BubbleVariation"
 import ReactSwitch from "../ReusableComponents/ReactSwitch"
+import { FaRedoAlt } from 'react-icons/fa';
 
 const Flexiplan = () => {
     const bubbleMap = require('../RequiredData/bubble-map.json');
@@ -9,6 +10,7 @@ const Flexiplan = () => {
 
     const [bubbleMapState, setBubbleMapState] = useState(null)
     const [eligibleBubbleMapState, setEligibleBubbleMapState] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     function formatBytes(bytes, decimals = 2) {
         if (bytes * 1024 * 1024 === 0) return '0 MB';
@@ -22,8 +24,7 @@ const Flexiplan = () => {
         return parseFloat(((bytes * 1024 * 1024) / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
-
-    useEffect(() => {
+    const handleSettingBubbleMapState = () => {
         const tempData = Object.entries(bubbleMap).map(([key, value]) => {
             let tempFlexiTypeVariation = []
             let tempFlexiType = null
@@ -109,6 +110,11 @@ const Flexiplan = () => {
             return { flexiType: tempFlexiType, flexiTypeVariation: tempFlexiTypeVariation, flexiTypeSerial: tempFlexiSerial, fexiTypeColor: tempFlexiTypeColor, mainFlexiType: key, presentSelectedValue, attributeDescription, description }
         })
         setBubbleMapState(tempData.sort((a, b) => a.flexiTypeSerial - b.flexiTypeSerial))
+    }
+
+
+    useEffect(() => {
+        handleSettingBubbleMapState()
     }, [])
 
     useEffect(() => {
@@ -142,6 +148,7 @@ const Flexiplan = () => {
             })
 
             setEligibleBubbleMapState(tempEligibleBubbleMapState)
+            setLoading(false)
 
         }
     }, [bubbleMapState])
@@ -150,13 +157,27 @@ const Flexiplan = () => {
         console.log("manto", eligibleBubbleMapState)
     }, [eligibleBubbleMapState])
 
+    const handleReset = () => {
+        setLoading(true)
+        setTimeout(() => {
+            handleSettingBubbleMapState()
+        }, 500);
+    }
+
     if (eligibleBubbleMapState == null)
         return null
 
     return (
         <div className='grid grid-cols-3'>
             <div className='col-span-3 md:col-span-2 mb-20'>
-                <p className='text-4xl pt-10 pb-5 text-center md:text-start  font-thin font-telenor'>Flexiplan</p>
+                <div className='flex justify-between pt-10 pb-5'>
+                <p className='text-4xl font-telenor'>Flexiplan</p>
+                <div className='flex md:mr-2'>
+                    <FaRedoAlt className={`mt-3.5 mr-2 ${loading ? "animate-spin" : ""}`}/>
+                    <p className='text-lg font-telenor mt-2 cursor-pointer' onClick={handleReset}>Reset</p>
+                </div>
+                </div>
+                
                 <p className='text-lg mt-1.5 font-telenor hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
                 {
                     eligibleBubbleMapState.map((value, index) => (
@@ -167,7 +188,7 @@ const Flexiplan = () => {
                                     value.attributeDescription && <p className='text-lg font-telenor mt-1 hidden md:block'>{value.attributeDescription}</p>
                                 }
                                 {
-                                    value.mainFlexiType != "mca" && <p className='text-xl font-telenor mt-1' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
+                                    value.mainFlexiType != "mca" && <p className='text-xl font-telenor mt-1 transition duration-300' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
                                 }
                                 {
                                     value.description && <p className='text-base mt-3 text-description font-telenor'>{value.description}</p>
