@@ -153,7 +153,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             {
                 value.map((value, index) => (
                     <button
-                        className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-2 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 font-telenor ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`}
+                        className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-1 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 font-telenor shadow-sm ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`}
                         style={{ cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
                         disabled={!value.validityDay}
                         onClick={() => handleClick(value)}
