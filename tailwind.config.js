@@ -18,6 +18,10 @@ module.exports = {
     },
     extend: {
 
+      fontFamily: {
+        telenor: ["Telenor", "sans-serif"],
+      },
+
       borderWidth: {
         1: "1px",
       },
@@ -33,7 +37,7 @@ module.exports = {
       },
 
       spacing: {
-        
+
       },
 
       colors: {

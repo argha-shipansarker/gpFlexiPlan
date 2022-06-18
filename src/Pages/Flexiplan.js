@@ -152,19 +152,19 @@ const Flexiplan = () => {
     return (
         <div className='grid grid-cols-3'>
             <div className='col-span-3 md:col-span-2'>
-                <p className='text-4xl pt-10 pb-5 text-center md:text-start'>Flexiplan</p>
-                <p className='text-lg mt-1.5 font-bold hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
+                <p className='text-4xl pt-10 pb-5 text-center md:text-start  font-thin font-telenor'>Flexiplan</p>
+                <p className='text-lg mt-1.5 font-telenor hidden md:block'>Make your own plan and enjoy great savings! Only for GP Customers</p>
                 {
                     eligibleBubbleMapState.map((value, index) => (
                         <div className={`grid grid-cols-3 md:gap-20 pt-6 pb-4 ${index != 1 ? "border-b-1" : ""}`} key={index}>
                             <div className='pr-8 md:pr-0'>
-                                <p className='text-xl font-medium'>{value.flexiType}</p>
+                                <p className='text-xl font-telenor'>{value.flexiType}</p>
                                 {
-                                    value.attributeDescription && <p className='text-lg font-medium mt-1 hidden md:block'>{value.attributeDescription}</p>
+                                    value.attributeDescription && <p className='text-lg font-telenor mt-1 hidden md:block'>{value.attributeDescription}</p>
                                 }
-                                <p className='text-xl font-medium mt-1' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
+                                <p className='text-xl font-telenor mt-1' style={{ color: value.fexiTypeColor }}>{value.presentSelectedValue}</p>
                                 {
-                                    value.description && <p className='text-base mt-3 text-description'>{value.description}</p>
+                                    value.description && <p className='text-base mt-3 text-description font-telenor'>{value.description}</p>
                                 }
                             </div>
                             <div className='col-span-2'>

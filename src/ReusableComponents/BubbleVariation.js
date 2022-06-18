@@ -6,7 +6,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
     const gettingPresentSelectedValue = (value) => {
         let name = null
-        switch(value.type){
+        switch (value.type) {
             case "data":
                 name = value.internet
                 break;
@@ -28,10 +28,9 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
     const handleClick = (flexiData) => {
 
-        if(flexiData.type == "longevity")
-        {
+        if (flexiData.type == "longevity") {
             let tempFlexiValidityObject = eligibleBubbleMapState[0]
-            tempFlexiValidityObject.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true: type.selected = false)
+            tempFlexiValidityObject.flexiTypeVariation.forEach(type => type.value == flexiData.value ? type.selected = true : type.selected = false)
             tempFlexiValidityObject.presentSelectedValue = `${flexiData.value} Days`
 
             let tempFlexiValidityObjectAfterClicked = eligibleBubbleMapState[0]
@@ -39,18 +38,18 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             let allDataForSpecficValidityDay = null
             Object.entries(eligibilityMap).forEach(([key, value]) => {
                 let keyName = key.split('_')[1]
-                if(keyName == selectedValidityDay.value){
+                if (keyName == selectedValidityDay.value) {
                     allDataForSpecficValidityDay = value
                 }
             })
 
             let tempEligibleBubbleMapState = eligibleBubbleMapState.map(flexiData => {
                 Object.entries(allDataForSpecficValidityDay).forEach(([key, value]) => {
-                    if(flexiData.mainFlexiType == key){
+                    if (flexiData.mainFlexiType == key) {
                         flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
-                            if(value.includes(flexiValue.value)){
+                            if (value.includes(flexiValue.value)) {
                                 flexiValue.validityDay = true
-                            }else{
+                            } else {
                                 flexiValue.validityDay = false
                             }
                         })
@@ -63,7 +62,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                         lastValidityFlexiTypeValue.presentSelectedValue = gettingPresentSelectedValue(lastValidityFlexiTypeValue)
 
                         flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
-                            if(flexiValue.value != lastValidityFlexiTypeValue.value){
+                            if (flexiValue.value != lastValidityFlexiTypeValue.value) {
                                 flexiValue.selected = false
                             }
                         })
@@ -74,17 +73,17 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
             })
 
             setEligibleBubbleMapState(tempEligibleBubbleMapState)
-        
-        } else{
-                let tempFlexiValidityObject = [...eligibleBubbleMapState]
 
-                tempFlexiValidityObject.forEach(flexiValue => {
-                if(flexiValue.mainFlexiType == flexiData.type){
+        } else {
+            let tempFlexiValidityObject = [...eligibleBubbleMapState]
+
+            tempFlexiValidityObject.forEach(flexiValue => {
+                if (flexiValue.mainFlexiType == flexiData.type) {
                     flexiValue.flexiTypeVariation.forEach(type => {
-                        if(type.value == flexiData.value){
-                            type.selected = true 
+                        if (type.value == flexiData.value) {
+                            type.selected = true
                             flexiValue.presentSelectedValue = gettingPresentSelectedValue(type)
-                        } else{
+                        } else {
                             type.selected = false
                         }
                     })
@@ -98,12 +97,12 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
     }
 
     const handleBackgroundColor = value => {
-        if(value.selected){
+        if (value.selected) {
             return `bg-[${color}]`
-        }else {
-            if(value.validityDay){
+        } else {
+            if (value.validityDay) {
                 return "bg-white"
-            }else {
+            } else {
                 return "bg-[#f5f5f5]"
             }
         }
@@ -112,8 +111,8 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
     const manto = (value) => {
         let name = null
         let textColor = `hover:text-white`
-        if(value.validityDay){
-            switch(value.type){
+        if (value.validityDay) {
+            switch (value.type) {
                 case "data":
                     name = `hover:bg-internet`
                     break;
@@ -133,7 +132,7 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
                     name = `hover:bg-validity`
                     break;
             }
-        }else{
+        } else {
             name = `hover:bg-[#f5f5f5]`
             textColor = `hover:text-black`
         }
@@ -144,11 +143,11 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
         <div className="flex flex-wrap">
             {
                 value.map((value, index) => (
-                    <button 
-                    className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-2 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`} 
-                    style={{cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
-                    disabled={!value.validityDay}
-                    onClick={() => handleClick(value)}
+                    <button
+                        className={`h-12 w-12 md:h-14 md:w-14 rounded-full border-2 flex justify-center items-center text-xxs md:text-xs ml-2 mb-2 md:ml-4 md:mb-3 font-telenor ${handleBackgroundColor(value)} ${manto(value)} ${value.selected ? "text-white" : "text-black"}`}
+                        style={{ cursor: value.validityDay ? "pointer" : "not-allowed", backgroundColor: value.selected ? color : "" }}
+                        disabled={!value.validityDay}
+                        onClick={() => handleClick(value)}
                     >
                         <span className={``}>{value.internet ? value.internet : value.value}</span>
                     </button>
