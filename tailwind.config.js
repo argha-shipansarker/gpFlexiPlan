@@ -18,6 +18,14 @@ module.exports = {
     },
     extend: {
 
+      borderWidth: {
+        1: "1px",
+      },
+
+      fontSize: {
+        "xxs": ".63rem"
+      },
+
       container: {
         screens: {
           lg: "1100px"
