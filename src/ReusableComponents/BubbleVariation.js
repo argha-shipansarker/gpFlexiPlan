@@ -56,22 +56,25 @@ const BubbleVariation = ({ value, color, eligibleBubbleMapState, setEligibleBubb
 
                         //setting a RANDOM variation of the FlexiType Attributes Initially True when longevity/Validity Field is Changed. 
 
+                        let presentSelectedFlexiTypeAttributeValue = flexiData.flexiTypeVariation.find(flexiValue => flexiValue.selected == true)
 
+                        if (!presentSelectedFlexiTypeAttributeValue.selected == presentSelectedFlexiTypeAttributeValue.validityDay) {
+                            let validityFlexiTypeData = flexiData.flexiTypeVariation.filter(flexiValue => flexiValue.validityDay == true)
 
-                        let validityFlexiTypeData = flexiData.flexiTypeVariation.filter(flexiValue => flexiValue.validityDay == true)
+                            let randomNumber = Math.floor(Math.random() * validityFlexiTypeData.length)
 
-                        let randomNumber = Math.floor(Math.random() * validityFlexiTypeData.length)
+                            let randomValidityFlexiTypeValue = validityFlexiTypeData[randomNumber]
 
-                        let randomValidityFlexiTypeValue = validityFlexiTypeData[randomNumber]
+                            randomValidityFlexiTypeValue.selected = true
+                            flexiData.presentSelectedValue = gettingPresentSelectedValue(randomValidityFlexiTypeValue)
 
-                        randomValidityFlexiTypeValue.selected = true
-                        flexiData.presentSelectedValue = gettingPresentSelectedValue(randomValidityFlexiTypeValue)
+                            flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
+                                if (flexiValue.value != validityFlexiTypeData[randomNumber].value) {
+                                    flexiValue.selected = false
+                                }
+                            })
+                        }
 
-                        flexiData.flexiTypeVariation.forEach((flexiValue, index) => {
-                            if (flexiValue.value != validityFlexiTypeData[randomNumber].value) {
-                                flexiValue.selected = false
-                            }
-                        })
                     }
                 })
 
